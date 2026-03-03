@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sivaramakrishnan M – Legal Portfolio</title>
+  <style>
+    :root {
+      --bg: #f5f5f3;
+      --sidebar-bg: #1a1a2e;
+      --sidebar-text: #d4c9a8;
+      --sidebar-active: #c9a84c;
+      --sidebar-hover: #2e2e4a;
+      --gold: #c9a84c;
+      --navy: #0d2244;
+      --olive: #4a5c2f;
+      --black: #1a1a1a;
+      --card-bg: #ffffff;
+      --card-border: #e0ddd5;
+      --muted: #6b6b6b;
+      --accent-light: #f0ead8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Times New Roman', Times, serif;
+      background: var(--bg);
+      color: var(--black);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    #sidebar {
+      width: 248px;
+      min-width: 248px;
+      background: var(--sidebar-bg);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 28px 20px 18px;
+      border-bottom: 1px solid rgba(201,168,76,0.25);
+    }
+
+    .sidebar-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.04em;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .sidebar-title {
+      font-size: 0.72rem;
+      color: var(--gold);
+      margin-top: 4px;
+      letter-spacing: 0.06em;
+      font-style: italic;
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin: 0 20px;
+    }
+
+    nav { padding: 14px 0; flex: 1; }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 22px;
+      color: var(--sidebar-text);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+    }
+
+    nav a:hover {
+      background: var(--sidebar-hover);
+      color: #fff;
+    }
+
+    nav a.active {
+      background: rgba(201,168,76,0.12);
+      color: var(--gold);
+      border-left-color: var(--gold);
+      font-weight: 600;
+    }
+
+    nav a .icon {
+      width: 16px;
+      text-align: center;
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .sidebar-footer {
+      padding: 16px 20px 22px;
+      border-top: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .sidebar-footer p {
+      font-size: 0.68rem;
+      color: rgba(212,201,168,0.5);
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--sidebar-text);
+      text-decoration: none;
+      font-size: 0.74rem;
+      padding: 5px 0;
+      transition: color 0.2s;
+    }
+
+    .quick-link:hover { color: var(--gold); }
+    .quick-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ── MAIN ── */
+    #main {
+      margin-left: 248px;
+      flex: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--card-border);
+      padding: 28px 44px 24px;
+      position: relative;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--navy), var(--olive), var(--gold));
+    }
+
+    .header-name {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .header-sub {
+      font-size: 0.82rem;
+      color: var(--olive);
+      margin-top: 4px;
+      letter-spacing: 0.08em;
+      font-style: italic;
+    }
+
+    .header-contact {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .contact-item a {
+      color: var(--navy);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-item a:hover { color: var(--gold); }
+
+    /* ── SECTIONS ── */
+    .page-content {
+      flex: 1;
+      padding: 32px 44px 44px;
+    }
+
+    .section { display: none; animation: fadeIn 0.35s ease; }
+    .section.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      color: var(--navy);
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gold);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 22px;
+      background: var(--olive);
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    /* About */
+    .about-statement {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-left: 4px solid var(--gold);
+      padding: 22px 26px;
+      font-size: 0.92rem;
+      line-height: 1.85;
+      color: var(--black);
+      margin-bottom: 22px;
+      border-radius: 2px;
+    }
+
+    .interest-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .interest-tag {
+      background: var(--accent-light);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--olive);
+      font-size: 0.78rem;
+      padding: 6px 14px;
+      border-radius: 2px;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+
+    .sub-title {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    /* Education */
+    .edu-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 18px 22px;
+      margin-bottom: 14px;
+      border-radius: 2px;
+      position: relative;
+      border-left: 3px solid var(--navy);
+    }
+
+    .edu-card:hover { box-shadow: 0 2px 14px rgba(13,34,68,0.07); }
+
+    .edu-degree {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .edu-school {
+      font-size: 0.84rem;
+      color: var(--olive);
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    .edu-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .edu-date {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .edu-note {
+      font-size: 0.8rem;
+      color: var(--black);
+      margin-top: 6px;
+    }
+
+    /* Internships */
+    .intern-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      margin-bottom: 16px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .intern-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, rgba(13,34,68,0.04), transparent);
+      border-bottom: 1px solid var(--card-border);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .intern-header:hover { background: rgba(201,168,76,0.06); }
+
+    .intern-org {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .intern-role {
+      font-size: 0.76rem;
+      color: var(--olive);
+      margin-top: 2px;
+      font-style: italic;
+      letter-spacing: 0.04em;
+    }
+
+    .intern-date {
+      font-size: 0.73rem;
+      color: var(--muted);
+      white-space: nowrap;
+      background: var(--bg);
+      padding: 3px 9px;
+      border-radius: 2px;
+      margin-left: 14px;
+    }
+
+    .intern-toggle {
+      color: var(--gold);
+      font-size: 1rem;
+      margin-left: 10px;
+      transition: transform 0.2s;
+    }
+
+    .intern-toggle.open { transform: rotate(180deg); }
+
+    .intern-body {
+      display: none;
+      padding: 14px 20px;
+    }
+
+    .intern-body.open { display: block; animation: fadeIn 0.2s ease; }
+
+    .intern-body ul {
+      padding-left: 18px;
+    }
+
+    .intern-body li {
+      font-size: 0.84rem;
+      line-height: 1.75;
+      color: var(--black);
+      margin-bottom: 3px;
+    }
+
+    /* Publications */
+    .pub-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 14px 20px;
+      margin-bottom: 10px;
+      border-radius: 2px;
+      border-left: 3px solid var(--olive);
+      font-size: 0.86rem;
+      line-height: 1.6;
+      color: var(--black);
+    }
+
+    .pub-card:hover { box-shadow: 0 2px 12px rgba(74,92,47,0.07); }
+
+    .pub-title {
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .pub-outlet {
+      font-size: 0.76rem;
+      color: var(--olive);
+      margin-top: 3px;
+      font-style: italic;
+    }
+
+    /* Conference */
+    .conf-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 14px 20px;
+      margin-bottom: 10px;
+      border-radius: 2px;
+      border-left: 3px solid var(--gold);
+    }
+
+    .conf-card:hover { box-shadow: 0 2px 12px rgba(201,168,76,0.1); }
+
+    .conf-topic {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.5;
+    }
+
+    .conf-org {
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 3px;
+      font-style: italic;
+    }
+
+    /* Certifications */
+    .cert-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 13px 20px;
+      margin-bottom: 10px;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .cert-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-light);
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .cert-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .cert-body {
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    /* Skills */
+    .skill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .skill-tag {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-bottom: 2px solid var(--navy);
+      color: var(--navy);
+      font-size: 0.81rem;
+      padding: 7px 16px;
+      border-radius: 2px;
+      letter-spacing: 0.03em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .skill-tag:hover {
+      border-bottom-color: var(--gold);
+      color: var(--olive);
+    }
+
+    /* Responsive */
+    @media (max-width: 760px) {
+      #sidebar {
+        width: 200px;
+        min-width: 200px;
+      }
+      #main { margin-left: 200px; }
+      header { padding: 20px 22px; }
+      .page-content { padding: 20px 22px; }
+      .header-name { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<aside id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-name">Sivaramakrishnan M</div>
+    <div class="sidebar-title">B.Com., LL.B. (Hons.) · CS Executive</div>
+  </div>
+  <div class="sidebar-divider"></div>
+
+  <nav>
+    <a href="#" class="nav-link active" data-section="about">
+      <span class="icon">◈</span> About
+    </a>
+    <a href="#" class="nav-link" data-section="education">
+      <span class="icon">◉</span> Education
+    </a>
+    <a href="#" class="nav-link" data-section="internships">
+      <span class="icon">◎</span> Internships
+    </a>
+    <a href="#" class="nav-link" data-section="certifications">
+      <span class="icon">◆</span> Certifications
+    </a>
+    <a href="#" class="nav-link" data-section="publications">
+      <span class="icon">▸</span> Publications
+    </a>
+    <a href="#" class="nav-link" data-section="conferences">
+      <span class="icon">◇</span> Conferences
+    </a>
+    <a href="#" class="nav-link" data-section="skills">
+      <span class="icon">◑</span> Key Skills
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <p>Quick Links</p>
+    <a href="mailto:muthuramansivaramakrishnan@gmail.com" class="quick-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="M2 7l10 7 10-7"/>
+      </svg>
+      Email
+    </a>
+    <a href="https://www.linkedin.com/in/sivaramakrishnan-muthuraman-799081295" target="_blank" class="quick-link">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/>
+        <circle cx="4" cy="4" r="2"/>
+      </svg>
+      LinkedIn
+    </a>
+  </div>
+</aside>
+
+<!-- ── MAIN ── -->
+<div id="main">
+  <header>
+    <div class="header-name">Sivaramakrishnan M</div>
+    <div class="header-sub">Final-Year B.Com., LL.B. (Hons.) · CS Executive · Corporate Law &amp; Governance</div>
+    <div class="header-contact">
+      <span class="contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b6b6b" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.22 2.84 2 2 0 012.22.84h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+        (+91) 9363 256 281
+      </span>
+      <span class="contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b6b6b" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="M2 7l10 7 10-7"/>
+        </svg>
+        <a href="mailto:muthuramansivaramakrishnan@gmail.com">muthuramansivaramakrishnan@gmail.com</a>
+      </span>
+      <span class="contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="#6b6b6b">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+        </svg>
+        Mayiladuthurai, Tamil Nadu, India
+      </span>
+      <span class="contact-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="#6b6b6b">
+          <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/>
+        </svg>
+        <a href="https://www.linkedin.com/in/sivaramakrishnan-muthuraman-799081295" target="_blank">LinkedIn Profile</a>
+      </span>
+    </div>
+  </header>
+
+  <div class="page-content">
+
+    <!-- ABOUT -->
+    <div id="about" class="section active">
+      <div class="section-title">About Me</div>
+      <div class="about-statement">
+        A dedicated Final-year B.Com., LL.B. (Hons.) student and CS Executive-qualified candidate passionate about corporate law, governance, and compliance having hands-on exposure to corporate compliance, SEBI regulations, NCLT matters, and company law practice through internships at Company Secretary firms and law offices and with a long-term goal of building a distinguished career at the intersection of law and corporate governance. Strongly interested in corporate compliance, alternative dispute resolution, and intellectual property rights, with a focus on contributing to effective legal and regulatory frameworks. Committed to continuous growth, adaptability, and delivering value in dynamic professional environments.
+      </div>
+      <div class="sub-title">Areas of Interest</div>
+      <div class="interest-grid">
+        <span class="interest-tag">Corporate Laws</span>
+        <span class="interest-tag">SEBI Regulations</span>
+        <span class="interest-tag">Labour Laws</span>
+        <span class="interest-tag">Intellectual Properties</span>
+        <span class="interest-tag">Alternative Dispute Resolution (ADR)</span>
+      </div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div id="education" class="section">
+      <div class="section-title">Education</div>
+
+      <div class="edu-card">
+        <div class="edu-degree">Company Secretaryship</div>
+        <div class="edu-school">Institute of Company Secretaries of India (ICSI)</div>
+        <div class="edu-meta">
+          <span class="edu-date">December 2021 – Present</span>
+        </div>
+        <div class="edu-note">Cleared the Executive stage. Currently pursuing the Professional stage.</div>
+      </div>
+
+      <div class="edu-card">
+        <div class="edu-degree">B.Com., LL.B. (Hons.)</div>
+        <div class="edu-school">SASTRA Deemed to be University, Thanjavur</div>
+        <div class="edu-meta">
+          <span class="edu-date">October 2021 – Present</span>
+          <span style="font-size:0.78rem;color:var(--olive);font-weight:600;">CGPA: 7.72</span>
+        </div>
+        <div class="edu-note">Currently in Final Year.</div>
+      </div>
+
+      <div class="edu-card">
+        <div class="edu-degree">Higher Secondary (12th Standard)</div>
+        <div class="edu-school">Dr. G.S. Kalyanasundaram Matric. Hr. Sec. School, Mayiladuthurai</div>
+        <div class="edu-meta">
+          <span class="edu-date">June 2020 – May 2021</span>
+          <span style="font-size:0.78rem;color:var(--olive);font-weight:600;">96.6%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTERNSHIPS -->
+    <div id="internships" class="section">
+      <div class="section-title">Internship Experience</div>
+
+      <div class="intern-card">
+        <div class="intern-header" onclick="toggleIntern(this)">
+          <div>
+            <div class="intern-org">KSR &amp; Co. Company Secretaries LLP, Coimbatore</div>
+            <div class="intern-role">Legal Intern</div>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <span class="intern-date">Dec 2025 – Jan 2026</span>
+            <span class="intern-toggle">▾</span>
+          </div>
+        </div>
+        <div class="intern-body">
+          <ul>
+            <li>Analyzed the Insolvency and Bankruptcy Code, 2016, with focused exposure to the Corporate Insolvency Resolution Process (CIRP) and liquidation framework.</li>
+            <li>Observed proceedings before the NCLT and NCLAT, and assisted in matters listed before the tribunals.</li>
+            <li>Prepared concise factual briefs and legal analyses for insolvency matters, including research on the effect of appellate orders on auction sales during liquidation.</li>
+            <li>Drafted replies to statutory and legal notices on behalf of shareholders, and assisted in legal drafting and professional correspondence.</li>
+            <li>Reviewed financial statements, annual reports, and Independent Auditor's Reports for legal and compliance issues.</li>
+            <li>Researched trademark infringement and passing-off matters, focusing on genericness, acquired distinctiveness, and likelihood of confusion.</li>
+            <li>Prepared structured case summaries supported by statutory provisions and judicial precedents.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="intern-card">
+        <div class="intern-header" onclick="toggleIntern(this)">
+          <div>
+            <div class="intern-org">KSR &amp; Co. Company Secretaries LLP, Chennai</div>
+            <div class="intern-role">Legal Intern</div>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <span class="intern-date">July 2025</span>
+            <span class="intern-toggle">▾</span>
+          </div>
+        </div>
+        <div class="intern-body">
+          <ul>
+            <li>Analysed SEBI (LODR) Regulations, 2015 and prepared compliance checklists for listed and SME companies.</li>
+            <li>Observed NCLT and NCLAT proceedings, gaining insights into corporate litigation and advocacy.</li>
+            <li>Worked on cases relating to oppression, mismanagement, and director removal with statutory and case law analysis.</li>
+            <li>Researched on merger schemes under the Companies Act, 2013 with focus on NCLT procedures.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="intern-card">
+        <div class="intern-header" onclick="toggleIntern(this)">
+          <div>
+            <div class="intern-org">Rajpati &amp; Associates</div>
+            <div class="intern-role">Legal Intern</div>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <span class="intern-date">Jan – Feb 2025</span>
+            <span class="intern-toggle">▾</span>
+          </div>
+        </div>
+        <div class="intern-body">
+          <ul>
+            <li>Drafted and reviewed legal documents and case files across company law and securities law matters.</li>
+            <li>Assisted in preparation of legal opinions through statutory research and judicial analysis and reviewed commercial contracts for compliance and risk issues.</li>
+            <li>Coordinated and supervised a batch of interns for a continuous period of one month, allocating research tasks and ensuring timely completion.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="intern-card">
+        <div class="intern-header" onclick="toggleIntern(this)">
+          <div>
+            <div class="intern-org">Office of The Public Prosecutor, Mayiladuthurai</div>
+            <div class="intern-role">Legal Intern</div>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <span class="intern-date">Dec 2024 – Jan 2025</span>
+            <span class="intern-toggle">▾</span>
+          </div>
+        </div>
+        <div class="intern-body">
+          <ul>
+            <li>Assisted in legal research and gave presentations on new criminal laws in comparison with old laws.</li>
+            <li>Interacted with police and concerned officers for gathering case-related information.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="intern-card">
+        <div class="intern-header" onclick="toggleIntern(this)">
+          <div>
+            <div class="intern-org">Law Solvers, Chennai</div>
+            <div class="intern-role">Legal Intern</div>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <span class="intern-date">July 2024</span>
+            <span class="intern-toggle">▾</span>
+          </div>
+        </div>
+        <div class="intern-body">
+          <ul>
+            <li>Supported firm's legal operations, ensuring smooth workflow.</li>
+            <li>Conducted research on various family law cases, motor vehicle accident cases, and civil suits.</li>
+            <li>Proofread legal documents and analyzed case law for potential defenses.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="intern-card">
+        <div class="intern-header" onclick="toggleIntern(this)">
+          <div>
+            <div class="intern-org">Sai Law Associates, Mayiladuthurai</div>
+            <div class="intern-role">Legal Intern</div>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <span class="intern-date">Jul – Aug 2023</span>
+            <span class="intern-toggle">▾</span>
+          </div>
+        </div>
+        <div class="intern-body">
+          <ul>
+            <li>Drafted pleadings, restoration petitions, prepared briefs, and maintained office diary.</li>
+            <li>Assisted clients in resolving issues and visited government offices for client matters.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="intern-card">
+        <div class="intern-header" onclick="toggleIntern(this)">
+          <div>
+            <div class="intern-org">Adv. Mr. Aarief Ali, Chennai</div>
+            <div class="intern-role">Legal Intern</div>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <span class="intern-date">Jan – Feb 2023</span>
+            <span class="intern-toggle">▾</span>
+          </div>
+        </div>
+        <div class="intern-body">
+          <ul>
+            <li>Conducted legal research to assist lawyers in preparing briefs and trial materials.</li>
+            <li>Collaborated closely with attorneys on case research and trial preparation.</li>
+            <li>Met clients to gather essential information for building cases.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="intern-card">
+        <div class="intern-header" onclick="toggleIntern(this)">
+          <div>
+            <div class="intern-org">Adv. Mr. C. Ravichandran, Kumbakonam</div>
+            <div class="intern-role">Legal Intern</div>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <span class="intern-date">July 2022</span>
+            <span class="intern-toggle">▾</span>
+          </div>
+        </div>
+        <div class="intern-body">
+          <ul>
+            <li>Experienced trial court hearings and familiarized with the fundamental aspects of court proceedings. Additionally, managed a filing system at the office to ensure efficiency.</li>
+            <li>Conducted preliminary client meetings, gathered relevant data, and conducted both general and legal research.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATIONS -->
+    <div id="certifications" class="section">
+      <div class="section-title">Certifications</div>
+
+      <div class="cert-card">
+        <div class="cert-icon">⚖</div>
+        <div>
+          <div class="cert-name">Intellectual Property Rights &amp; Competition Law</div>
+          <div class="cert-body">IIT Kharagpur – SWAYAM Platform</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">◈</div>
+        <div>
+          <div class="cert-name">Strategic Management</div>
+          <div class="cert-body">IISc Bangalore – SWAYAM Platform</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">◉</div>
+        <div>
+          <div class="cert-name">Research Methodology</div>
+          <div class="cert-body">NLU Delhi – SWAYAM Platform</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-icon">✍</div>
+        <div>
+          <div class="cert-name">Advanced Legal Drafting</div>
+          <div class="cert-body">Into Legal World</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PUBLICATIONS -->
+    <div id="publications" class="section">
+      <div class="section-title">Publications</div>
+
+      <div class="pub-card">
+        <div class="pub-title">From Patents to Pixels: The Digital Transformation of Intellectual Property Rights</div>
+        <div class="pub-outlet">ISBN: 978-81-984716-7-3</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Evolving Work Relationships: A Legal Perspective on IT Contractual Validity</div>
+        <div class="pub-outlet">Abhidhvaj Law Journal</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">AI for Justice: Unlocking Access to Legal Services</div>
+        <div class="pub-outlet">Sathyam Law International</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">The Kaleidoscope of Delinquency: Socio-Economic Status as a Prism for Understanding Youth Offending</div>
+        <div class="pub-outlet">ISBN: 978-81-970856-42</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Sparks of Joy, Shadows of Concern: Exploring the Complexities of Sivakasi's Firework Industries</div>
+        <div class="pub-outlet">International Journal of Research and Analytical Reviews</div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Psychology Behind Economic Bubbles: A Behavioral Economics Perspective</div>
+        <div class="pub-outlet">ISBN: 987-93-92995-43-9</div>
+      </div>
+    </div>
+
+    <!-- CONFERENCES -->
+    <div id="conferences" class="section">
+      <div class="section-title">Conference Presentations</div>
+
+      <div class="conf-card">
+        <div class="conf-topic">Skyward Bound: Launching India's Drone Industry to New Heights &amp; Depths</div>
+        <div class="conf-org">Organized by Surana &amp; Surana and Vinayaka Mission Law School, India</div>
+      </div>
+
+      <div class="conf-card">
+        <div class="conf-topic">Towards an Accelerated Transition in the Indian Economy – The Apocalyptic Imperative of MSME</div>
+        <div class="conf-org">ICIEM'23 – Birla Institute of Technology, India</div>
+      </div>
+
+      <div class="conf-card">
+        <div class="conf-topic">Towards the Zero-Hunger Destination: Sustainable Goals and State Policy Imperative</div>
+        <div class="conf-org">SYMROLIC'23 – Symbiosis Law School, India</div>
+      </div>
+
+      <div class="conf-card">
+        <div class="conf-topic">Peace and Justice Strong Institutions: A Fantasized Fallacy or a Workable Wonder</div>
+        <div class="conf-org">SYMROLIC'23 – Symbiosis Law School, India</div>
+      </div>
+
+      <div class="conf-card">
+        <div class="conf-topic">AI for Social Justice: Navigating Bias and Discrimination in the World of Artificial Intelligence</div>
+        <div class="conf-org">School of Management, SASTRA Deemed University, India</div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div id="skills" class="section">
+      <div class="section-title">Key Skills</div>
+      <div class="skill-group">
+        <span class="skill-tag">Legal Research &amp; Statutory Analysis</span>
+        <span class="skill-tag">Companies Act, 2013 – Interpretation &amp; Compliance</span>
+        <span class="skill-tag">Drafting of Notices, Resolutions &amp; Legal Documents</span>
+        <span class="skill-tag">NCLT / NCLAT Research &amp; Case Analysis</span>
+        <span class="skill-tag">Contract Review &amp; Documentation</span>
+        <span class="skill-tag">SEBI (LODR) Regulations</span>
+        <span class="skill-tag">Insolvency &amp; Bankruptcy Code (IBC)</span>
+        <span class="skill-tag">Time Management</span>
+      </div>
+    </div>
+
+  </div><!-- /page-content -->
+</div><!-- /main -->
+
+<script>
+  // Section navigation
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('.section');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = this.dataset.section;
+
+      navLinks.forEach(l => l.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+
+      this.classList.add('active');
+      document.getElementById(target).classList.add('active');
+    });
+  });
+
+  // Intern accordion toggle
+  function toggleIntern(header) {
+    const body = header.nextElementSibling;
+    const toggle = header.querySelector('.intern-toggle');
+    const isOpen = body.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.intern-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.intern-toggle').forEach(t => t.classList.remove('open'));
+
+    if (!isOpen) {
+      body.classList.add('open');
+      toggle.classList.add('open');
+    }
+  }
+</script>
+</body>
+</html>
